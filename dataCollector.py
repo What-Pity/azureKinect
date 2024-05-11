@@ -8,7 +8,7 @@ import cv2
 class DataCollector:
     def __init__(self, num, root_dir='./data'):
         self.root = Path(root_dir)
-        self.time = time.strftime('%H%M%S', time.localtime())
+        self.time = time.strftime('%y%m%d%H%M%S', time.localtime())
         self.counter = 0
         self.num = num
         self.sub_dirs = []
@@ -26,7 +26,7 @@ class DataCollector:
                 pc.points = o3d.utility.Vector3dVector(pointcloud)
                 if colorMerged is not None:
                     pc.colors = o3d.utility.Vector3dVector(
-                        colorMerged(images[i])/255.0)
+                        colorMerged(images[i][:, :, ::-1])/255.0)
                 self.save_pointcloud(pc, self.sub_dirs[i])
         self.counter += 1
 
